@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="druid.properties"/>
+    <!--是否开启驼峰命名自动映射-->
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--需要起别名的全限定包名-->
+    <typeAliases>
+        <package name="com.javays.product.bean"/>
+    </typeAliases>
+    <!--分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理选项-->
+            <transactionManager type="JDBC"/>
+            <!--是否使用连接池/使用druid连接池-->
+            <dataSource type="com.javays.base.bean.DruidDataSourceFactory">
+                <!--数据库配置文件-->
+                <property name="url" value="${url}" />
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}" />
+                <property name="driverClassName" value="${driverClassName}"/>
+                <property name="maxActive" value="${maxActive}" />
+                <property name="initialSize" value="${initialSize}" />
+                <property name="maxWait" value="${maxWait}" />
+                <property name="minIdle" value="${minIdle}" />
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--xml映射文件的所在的全限定包名-->
+        <package name="com.javays.product.mapper"/>
+    </mappers>
+</configuration>
